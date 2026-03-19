@@ -1,14 +1,12 @@
-const express = require('express');
+import express from 'express';
+import {serverConfig} from './config/index.ts';
+import pingRouter from './routers/ping.router.ts';
 
 const app = express();
 
-const PORT : number = 3000;
-
-app.get('/' , (req : any, res : any) => {
-    res.send("Pong");
-});
+app.get('/ping' ,pingRouter);
  
-app.listen(PORT , async () => {
-    console.log(`Server started at PORT ${PORT}`);
+app.listen(serverConfig.PORT , async () => {
+    console.log(`Server started at PORT ${serverConfig.PORT}`);
     console.log("Press ctrl + c to end the process");
 });
