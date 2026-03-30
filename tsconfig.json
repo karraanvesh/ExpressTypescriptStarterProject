@@ -5,6 +5,7 @@
     // other options
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
     "noEmit": true, 
 
     // File Layout

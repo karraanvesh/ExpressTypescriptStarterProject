@@ -5,7 +5,7 @@ type ServerConfig = {
 };
 
 function loadenv() {
-    dotenv.config();
+    dotenv.config({debug : true});
     console.log("environment variables loaded");
 }
 
