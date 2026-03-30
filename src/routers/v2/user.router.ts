@@ -3,4 +3,4 @@ import {userHandler} from '../../controllers/user.controller.ts';
 
 export const userRouter = express.Router();
 
-userRouter.get('/users/:user_name/users' , userHandler);
+userRouter.get('/:user_name/users' , userHandler);

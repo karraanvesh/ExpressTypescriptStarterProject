@@ -6,8 +6,6 @@ import { pingSchema } from '../../validators/ping.validator.ts';
 
 const pingRouter = express.Router();
 
-console.log("schema : " , pingSchema);
-
 pingRouter.get('/',  validateRequestBody(pingSchema) , pingHandler);
 
 pingRouter.get('/:user_id/comments' , pingHandler); // after /ping :id is a variable part we need to tell to 
