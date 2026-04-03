@@ -2,7 +2,6 @@ import express from 'express';
 import {serverConfig} from './config/index.ts';
 import v1Router from './routers/v1/index.router.ts';
 import v2Router from './routers/v2/index.ts';
-import * as z from 'zod';
 import { genericErrorHandler } from './middlewares/error.middleware.ts';
 
 const app = express();
