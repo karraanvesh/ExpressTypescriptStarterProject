@@ -1,6 +1,7 @@
 import { ZodAny } from "zod";
 import express from 'express';
 import type { promises } from "node:dns";
+import logger from "../config/logger.config.ts";
 /**
  * 
  * @param schema - Zod Schema to validate the request body
@@ -32,17 +33,17 @@ function isValidNumber(req : express.Request) {
 export const validateRequestBody = (schema : ZodAny) => {
     return async (req : express.Request , res : express.Response , next : express.NextFunction ) => {
         try {
-            console.log("received request : " , req.body);
+            logger.info("Validating request body");
             await schema.parse(req.body);
-            
-            console.log("Request is vaid");
+
+            logger.info("Request body is valid");
             next();
 
         } catch (error) {
             // If the validation is failed
             // equivalent to res = function (res) => {res.status(400); return res; }
 
-            console.log("In catch block");
+            logger.error("In catch block");
             res.status(400).json({
                 message : "Invalid request body",
                 success : false,
@@ -55,7 +56,7 @@ export const validateRequestBody = (schema : ZodAny) => {
 export const validateRequestParams = (schema : ZodAny) => {
     return async (req : express.Request , res : express.Response , next : express.NextFunction ) => {
         try {
-            console.log("received request : " , req.params);
+           // console.log("received request : " , req.params);
             await schema.parse(req.params);
             await isValidNumber(req);
             
@@ -66,7 +67,7 @@ export const validateRequestParams = (schema : ZodAny) => {
             // If the validation is failed
             // equivalent to res = function (res) => {res.status(400); return res; }
 
-            console.log("In catch block of user request params");
+           // console.log("In catch block of user request params");
             res.status(400).json({
                 message : "Invalid request params",
                 success : false,
@@ -79,7 +80,7 @@ export const validateRequestParams = (schema : ZodAny) => {
 export const validateRequestQueryParams = (schema : ZodAny) => {
     return async (req : express.Request , res : express.Response , next : express.NextFunction ) => {
         try {
-            console.log("received request : " , req.query);
+            // console.log("received request : " , req.query);
 
             const invalidData = "Dummy data";
 
