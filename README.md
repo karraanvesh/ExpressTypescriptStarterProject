@@ -9,7 +9,7 @@ git clone https://github.com/karraanvesh/ExpressTypescriptStarterProject.git <Pr
 2. Move in to the folder structure 
 
 '''
-cd <ProjectName>
+cd `<ProjectName>`
 '''
 
 3. Install npm dependencies 
