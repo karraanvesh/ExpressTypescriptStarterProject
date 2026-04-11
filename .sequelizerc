@@ -1,0 +1,6 @@
+import path from 'path';
+
+export var seedersPath =  path.resolve('./src/db/seeders');
+export var modelsPath = path.resolve('./src/db/models');
+export var migrationsPath =  path.resolve('./src/db/migrations');
+export var config = path.resolve('./src/config/sequelize.config.js');
