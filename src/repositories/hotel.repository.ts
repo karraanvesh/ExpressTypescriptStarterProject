@@ -28,3 +28,44 @@ export async function getHotel(id: number) {
 
     return hotel;
 }
+
+export async function getAllHotels() {
+    const hotels = await Hotel.findAll();
+
+    if(!hotels) {
+        logger.error('Hotels not found');
+        throw new NotFoundError("No hotels were found");
+    }
+
+    logger.info('Hotels are : ' , hotels);
+
+    return hotels;
+}
+
+export async function deleteHotel(id : number) {
+    const hotel = await Hotel.findByPk(id);
+
+    if(hotel) {
+        await hotel.destroy();
+    } else {
+        throw new NotFoundError("Hotel not found");
+    }
+
+    return hotel;
+}
+
+export async function updateHotel(id : number , hotelRating : number) {
+    const hotel = await Hotel.findByPk(id);
+
+    if(!hotel) {
+        logger.error(`Hotel not found : ${id}`);
+        throw new NotFoundError(`Hotel with ${id} is not found`);
+    }
+
+    hotel.rating = hotelRating;
+    await hotel.save();
+
+    logger.info(`Hotel found : ${hotel.id}`);
+
+    return hotel;
+}
