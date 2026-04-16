@@ -30,7 +30,11 @@ export async function getHotel(id: number) {
 }
 
 export async function getAllHotels() {
-    const hotels = await Hotel.findAll();
+    const hotels = await Hotel.findAll({
+        where : {
+            deletedAt : null
+        }
+    });
 
     if(!hotels) {
         logger.error('Hotels not found');
@@ -42,16 +46,20 @@ export async function getAllHotels() {
     return hotels;
 }
 
-export async function deleteHotel(id : number) {
+export async function softDeleteHotel(id : number) {
     const hotel = await Hotel.findByPk(id);
 
-    if(hotel) {
-        await hotel.destroy();
-    } else {
+    if(!hotel) {
+        logger.error(`Hotel not found : ${id}`);
         throw new NotFoundError("Hotel not found");
     }
 
-    return hotel;
+    hotel.deletedAt = new Date();
+    await hotel.save();
+
+    logger.info(`Hotel soft deleted : ${hotel.id}`);
+
+    return true;
 }
 
 export async function updateHotel(id : number , hotelRating : number) {

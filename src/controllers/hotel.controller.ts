@@ -1,6 +1,6 @@
 import express, { type NextFunction } from 'express';
-import type { createHotelDTO } from '../repositories/dto/hotel.dto';
 import { createHotelService, deleteHotelService, getAllHotelsService, getHotelByIdService, updateHotelService } from '../services/hotel.service.ts';
+import { StatusCodes } from 'http-status-codes';
 
 export async function createHotelHandler(req : express.Request , res : express.Response , next : express.NextFunction) {
     // 1. Call the service layer
@@ -9,7 +9,7 @@ export async function createHotelHandler(req : express.Request , res : express.R
 
     // 2. Send the response
 
-    res.status(201).json({
+    res.status(StatusCodes.CREATED).json({
         message : "Hotel created successfully",
         data : hotelResponse,
         success : true
@@ -23,7 +23,7 @@ export async function getHotelByIdHandler(req : express.Request , res : express.
 
     // 2. Send the response
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         message : "Hotel fetched successfully",
         data : hotelResponse,
         success : true
@@ -33,7 +33,7 @@ export async function getHotelByIdHandler(req : express.Request , res : express.
 export async function getAllHotelHandler(req : express.Request , res : express.Response , next : express.NextFunction) {
     const allHotels = await getAllHotelsService();
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         message : "All hotels fetched successfully",
         data : allHotels,
         success : true
@@ -44,13 +44,13 @@ export async function deleteHotelHandler(req : express.Request , res : express.R
     try {
         const deletedHotelResponse = await deleteHotelService(Number(req.params.id));
 
-        res.status(200).json({
+        res.status(StatusCodes.OK).json({
             message : "Hotel successfully deleted",
             data : deleteHotelHandler,
             success : true
         });
     } catch (error) {
-        res.status(501).json({
+        res.status(StatusCodes.NOT_IMPLEMENTED).json({
             message : "Unable to delete the hotel",
             success : false
         })
@@ -61,13 +61,13 @@ export async function deleteHotelHandler(req : express.Request , res : express.R
 export async function updateHotelHandler(req : express.Request , res : express.Response , next : express.NextFunction) {
     try {
         const updatedHotel = await updateHotelService(req.body.id , req.body.hotelRating);
-        res.status(200).json({
+        res.status(StatusCodes.OK).json({
             message : "Hotel updated successfully",
             data : updatedHotel,
             success : true
         })
     } catch (error) {
-        res.status(501).json({
+        res.status(StatusCodes.NOT_IMPLEMENTED).json({
             message : "Unable to update the hotel",
             success : false
         });
